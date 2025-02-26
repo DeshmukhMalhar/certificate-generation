@@ -45,13 +45,21 @@ openssl req -x509 -nodes -days $VALIDITY \
     -newkey rsa:2048 \
     -keyout "/certificates/$DOMAIN/$DOMAIN.key" \
     -out "/certificates/$DOMAIN/$DOMAIN.crt" \
-    -config /tmp/openssl.cnf
+    -config /tmp/openssl.cnf \
+	-extensions req_ext
 
 # Convert to PFX format (for Windows/IIS compatibility)
 openssl pkcs12 -export -out "$DOMAIN_PATH/$DOMAIN.pfx" \
     -inkey "$DOMAIN_PATH/$DOMAIN.key" \
     -in "$DOMAIN_PATH/$DOMAIN.crt" \
 	-passout pass:${PASSWORD:-}   # Empty password if PASSWORD environment variable is not set
+
+# verify
+
+openssl x509 -in certificates/$DOMAIN/$DOMAIN.crt -text -noout | grep "Subject:"
+openssl x509 -in certificates/$DOMAIN/$DOMAIN.crt -text -noout | grep "DNS:"
+
+openssl x509 -in certificates/$DOMAIN/$DOMAIN.crt -text -noout
 
 echo "Certificates generated in: $DOMAIN_PATH"
 

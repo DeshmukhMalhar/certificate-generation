@@ -8,7 +8,7 @@ C  = IN
 ST = Maharashtra
 L  = Pune
 O  = .
-CN = DEFAULT_DOMAIN  # This should be replaced dynamically
+CN = *.DEFAULT_DOMAIN  # This should be replaced dynamically
 
 [ req_ext ]
 subjectAltName = @alt_names

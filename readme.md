@@ -1,34 +1,41 @@
 # SSL Certificate Generator
 
-This project automates the generation of SSL certificates using OpenSSL inside a Docker container. The certificates are stored in a volume-mounted `certificates` directory, organized by domain name.
+This project automates the generation of **wildcard** SSL certificates using OpenSSL inside a Docker container. The certificates are stored in a volume-mounted `certificates` directory, organized by domain name.
 
 ## Instructions
 
 ### 1. Update the Domain File
 
 Edit the `domain` file in the project root and add the domain name for which you need a certificate:
+It shall not be `*.example.com` this automatically generates wildcard vertificate for `*.example.com`
+Specify the base domain only
+eg: `example.com` , `subdomain.example.com`
 
 ```bash
 echo "example.com" > domain
 ```
 
-### 2. Set Environment Variables (Optional)
+### 2. Set Environment Variables
 
-You can customize the certificate validity and `.pfx` password by setting the following environment variables:
+You can set environment variables manually or use a `.env` file.
 
-#### **Set Certificate Validity (Default: 365 days)**
+#### **Option 1: Set Environment Variables Manually**
 
 ```bash
 export VALIDITY=730  # Set validity in days (2 years)
-```
-
-#### **Set Certificate Password (Required for .pfx file)**
-
-```bash
 export PASSWORD="your-secure-password"
 ```
 
-> 🔹 If `PASSWORD` is not set, the `.pfx` file will be generated **without** a password.
+#### **Option 2: Use a `.env` File**
+
+Create a file named `.env` in the project root and add the variables:
+
+```
+VALIDITY=730
+PASSWORD=your-secure-password
+```
+
+The `.env` file will be automatically loaded by Docker Compose.
 
 ### 3. Build and Run the Container
 
@@ -69,3 +76,4 @@ rm -rf certificates/
 - Ensure the `domain` file is not empty; otherwise, certificate generation will fail.
 - The `VALIDITY` environment variable controls the certificate validity period (defaults to **365 days**).
 - The `.pfx` file contains both the private key and the certificate. If `PASSWORD` is set, it will be required when importing the `.pfx`.
+- All environment variables can be set manually or via a `.env` file for convenience.

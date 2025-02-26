@@ -3,6 +3,8 @@ version: "3.8"
 services:
   cert-gen:
     build: .
+    env_file:
+      - .env
     volumes:
       - ./certificates:/certificates # Mount local certificates folder
       - ./domain:/domain # File containing domain name
