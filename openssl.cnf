@@ -1,0 +1,18 @@
+[ req ]
+distinguished_name = req_distinguished_name
+req_extensions = req_ext
+prompt = no  # Ensures OpenSSL does not prompt for input
+
+[ req_distinguished_name ]
+C  = IN
+ST = Maharashtra
+L  = Pune
+O  = .
+CN = DEFAULT_DOMAIN  # This should be replaced dynamically
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = DEFAULT_DOMAIN
+DNS.2 = *.DEFAULT_DOMAIN

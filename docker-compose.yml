@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  cert-gen:
+    build: .
+    volumes:
+      - ./certificates:/certificates # Mount local certificates folder
+      - ./domain:/domain # File containing domain name
+      - ./openssl.cnf:/etc/ssl/openssl.cnf # OpenSSL config file
+    restart: "no"
