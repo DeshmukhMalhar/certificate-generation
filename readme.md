@@ -6,10 +6,13 @@ This project automates the generation of **wildcard** SSL certificates using Ope
 
 ### 1. Update the Domain File
 
-Edit the `domain` file in the project root and add the domain name for which you need a certificate:
+Edit the `domain` file in the project root and add the domain name for which you need a certificate.
+
 It shall not be `*.example.com` this automatically generates wildcard vertificate for `*.example.com`
+
 Specify the base domain only
-eg: `example.com` , `subdomain.example.com`
+
+> eg: `example.com` , `subdomain.example.com`
 
 ```bash
 echo "example.com" > domain
